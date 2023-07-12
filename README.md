@@ -1,1 +1,2 @@
 # rock-paper-scissors
+This is a rock paper scissors project where you can play with the computer this game. If you want to know more about this game visit this link https://en.wikipedia.org/wiki/Rock%E2%80%93paper%E2%80%93scissors .
