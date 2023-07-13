@@ -1,49 +1,54 @@
-function getComputerChoice(){
-     var choices = ["scissors", "paper", "rock"]
-     var el = choices[Math.floor(Math.random() * 3)];
-     return el;
-}
-//How each round will be played
-function playRound(playerSelection, computerSelection) {
-     const winningMoves = {
-       "rock": "scissors",
-       "scissors": "paper",
-       "paper": "rock"
-     };
-     if (playerSelection === computerSelection) {
-       return "Tie!";
-     }
-     if (winningMoves[playerSelection] === computerSelection) {
-       return "You Win!";
-     } else {
-       return "You Lose!";
-     }
-}
-//Playing 5 times
-function main() {
-     let playerPoints = 0;
-     let computerPoints = 0;
-     for (let i = 0; i < 5; i++) {
-       const playerSelection = prompt("Enter your selection (rock, scissors, or paper): ");
-       console.log(`Player: ${playerSelection}`);
-       const computerSelection = getComputerChoice();
-       console.log(`Computer: ${computerSelection}`);
-       const winner = playRound(playerSelection, computerSelection);
-       if (winner === "You Win!") {
-         playerPoints++;
-       } else {
-         computerPoints++;
-       }
-       console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
-     }
+let playerScore = 0;
+          let computerScore = 0;
+          let round = 0;
+          function computerPlay() {
+               const choices = ["Rock", "Paper", "Scissors"];
+               return choices[Math.floor(Math.random() * choices.length)];
+          }
 
-     // Determine the winner of the game.
-     if (playerPoints > computerPoints) {
-       return "You won!";
-     } else if (playerPoints < computerPoints) {
-       return "Computer won!";
-     } else {
-       return "Tie!";
-     }
-   }
-   console.log(main())
+          function playRound(playerSelection, computerSelection) {
+               if (playerSelection === computerSelection) {
+                    return "It's a tie!";
+               } else if (
+                    (playerSelection === "Rock" && computerSelection === "Scissors") ||
+                    (playerSelection === "Paper" && computerSelection === "Rock") ||
+                    (playerSelection === "Scissors" && computerSelection === "Paper")
+               ) {
+                    playerScore++;
+                    return `Player: ${playerScore} <br />computer: ${computerScore} <br/> You win! ${playerSelection} beats ${computerSelection}.`;
+               } else {
+                    computerScore++;
+                    return `Player: ${playerScore} <br />computer: ${computerScore} <br/> You lose! ${computerSelection} beats ${playerSelection}.`;
+               }
+          }
+
+          function game(playerSelection) {
+               if (round < 5) {
+                    round++;
+                    const computerSelection = computerPlay();
+                    console.log(computerSelection);
+                    const result = playRound(playerSelection, computerSelection);
+                    document.getElementById("result").innerHTML = result;
+               }
+               else {
+                    document.getElementById("player").innerHTML = `Player: ${playerScore}`;
+                    document.getElementById("computer").innerHTML = `Computer: ${computerScore}`;
+                    if (playerScore > computerScore) {
+                         document.getElementById("result").innerHTML = "Game over. You won the game!";
+                    } else if (computerScore > playerScore) {
+                         document.getElementById("result").innerHTML = "Game over. You lost the game.";
+                    } else {
+                         document.getElementById("result").innerHTML = "Game over. It's a tie!";
+                    }
+               }
+          }
+
+          document.getElementById("rock").addEventListener("click", function () {
+               game("Rock");
+          });
+          document.getElementById("paper").addEventListener("click", function () {
+               game("Paper");
+          });
+          document.getElementById("scissors").addEventListener("click", function () {
+               game("Scissors");
+          });
